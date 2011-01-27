@@ -1,5 +1,5 @@
 --utility
-function hsl(h, s, l) --http://love2d.org/wiki/HSL_color
+function hsl(h, s, l)                                                   --LINK http://love2d.org/wiki/HSL_color
     if s <= 0 then return l,l,l end
     h, s, l = h/256*6, s/255, l/255
     local c = (1-math.abs(2*l-1))*s
@@ -16,6 +16,15 @@ function hsl(h, s, l) --http://love2d.org/wiki/HSL_color
                math.ceil((b+m)*256)
 end
 
+function pyramid(base)
+    total = 0
+    while base>0 do
+        total = total + base
+        base = base - 1
+    end
+    return total
+end
+
 
 function love.load()
 
@@ -29,28 +38,47 @@ function love.load()
     fullscreen = false
     love.graphics.setMode(width, height, fullscreen)
     love.graphics.setBackgroundColor( hsl(138, 20, 50) )
+    PI = 3.14139
     
     
     --physics
-    gravity = 500
-    meter = 50
+    gravity = 500*scale
+    meter = 50*scale
     world = love.physics.newWorld(0, 0, width*3, height*3)
     world:setGravity(0, gravity)
     world:setMeter(meter)
     origin = love.physics.newBody(world, width/2, height/2, 0, 0)
     
     
-    --sands--A SINGLE ONE, NOT FINAL
+    --Sands                                                             --TODO "Class" not yet ready for instancing
     sands = {}
-    sands.body = love.physics.newBody(world, width/2, 200, 0.1, 0)
-    sands.shape = love.physics.newCircleShape(sands.body, 0, 0, 7)
+    sands.bodies = {}
+    sands.shapes = {}
+    sands.count = pyramid(15)
+    sands.eq = 0.0                                                      --NOTE -1 means one side has won
+    function sands:fill(x, y)
+        if self.count>0 then
+            self.bodies[self.count] = love.physics.newBody(world, x, y, 0.02, 0)
+            self.shapes[self.count] = love.physics.newCircleShape(self.bodies[self.count], 0, 0, 10*scale)
+            self.shapes[self.count]:setFriction(0.1)
+            self.count = self.count - 1
+        end
+    end
     function sands:draw()
         love.graphics.push()
         love.graphics.setColor(255, 255, 255)
-        
-        love.graphics.circle('fill', sands.body:getX(), sands.body:getY(), sands.shape:getRadius())
-        
+        for k,v in pairs(sands.bodies) do 
+            love.graphics.circle('fill', v:getX(), v:getY(), sands.shapes[k]:getRadius())
+        end
         love.graphics.pop()
+    end
+    function sands:setBullet(bool)                                      --DBUG does not work, that is to say, slows down too much when needed
+        for k,v in pairs(sands.bodies) do 
+            v:setBullet(bool)
+        end
+    end
+    function sands:countEq()                                            --TODO write function to see who's winning
+        --count sand equilibrium here, make it fast
     end
     
     
@@ -58,39 +86,47 @@ function love.load()
     glass = {}
     
     glass.body = love.physics.newBody(world, width/2, height/2, 10, 10)
+    glass.body:setBullet(true)
     glass.joint = love.physics.newRevoluteJoint(origin, glass.body, origin:getX(), origin:getY())
     glass.shape = {}
     glass.shape.top     = love.physics.newPolygonShape(glass.body, -164*scale, -230*scale,  164*scale, -230*scale,  164*scale, -250*scale, -164*scale, -250*scale)
     glass.shape.bottom  = love.physics.newPolygonShape(glass.body, -164*scale,  230*scale,  164*scale,  230*scale,  164*scale,  250*scale, -164*scale,  250*scale)
     glass.shape.right   = love.physics.newPolygonShape(glass.body,  18*scale, 0*scale,  164*scale, 230*scale,  164*scale, -230*scale, 200*scale, 0)
     glass.shape.left    = love.physics.newPolygonShape(glass.body, -18*scale, 0*scale, -164*scale, 230*scale, -164*scale, -230*scale, -200*scale, 0)
+    for k,v in pairs(glass.shape) do 
+        v:setFriction(0.1*scale)
+    end
     
-    glass.body:setAngularDamping(5)
+    glass.body:setAngularDamping(10*scale)
+    glass.body:setAngle(PI/2)
 
     function glass:draw()
         love.graphics.push()
         love.graphics.setColor(255, 255, 255)
         love.graphics.translate(self.body:getX(), self.body:getY())
         love.graphics.rotate(self.body:getAngle())
-
-        love.graphics.polygon('fill', 18*scale, 0*scale, 164*scale, 230*scale, 210*scale, 230*scale, 64*scale, 0*scale, 210*scale, -230*scale, 164*scale, -230*scale)
+        --actual draw
+        love.graphics.polygon('fill',  18*scale, 0*scale,  164*scale, 230*scale,  210*scale, 230*scale,  64*scale, 0*scale,  210*scale, -230*scale,  164*scale, -230*scale)
         love.graphics.polygon('fill', -18*scale, 0*scale, -164*scale, 230*scale, -210*scale, 230*scale, -64*scale, 0*scale, -210*scale, -230*scale, -164*scale, -230*scale)
-        love.graphics.polygon('fill', -210*scale, 230*scale, 210*scale, 230*scale, 236*scale, 270*scale, -236*scale, 270*scale)
+        love.graphics.polygon('fill', -210*scale,  230*scale, 210*scale,  230*scale, 236*scale,  270*scale, -236*scale,  270*scale)
         love.graphics.polygon('fill', -210*scale, -230*scale, 210*scale, -230*scale, 236*scale, -270*scale, -236*scale, -270*scale)
-        
         love.graphics.pop()
-        
+    end
+    function glass:fixDeviation()                                       --NOTE needed to fix deviation due to weight
+        glass.body:setX(width/2)
+        glass.body:setY(height/2)
     end
     
     
-    --gentleman "Class", not yet ready for instancing
+    --gentleman                                                         --TODO "Class", not yet ready for instancing
     gentleman = {}
     gentleman.insist = 1
-    gentleman.force = 50
-    gentleman.impulse = 1*scale
+    gentleman.force = 75
+    gentleman.impulse = 0.5*scale
     gentleman.state = 0
     gentleman.delay = 0
     gentleman.impatience = 0
+    gentleman.pop = false
     gentleman.control = {right="right", down="down", left="left"}
     function gentleman:update(dt)
         right = love.keyboard.isDown(self.control.right)
@@ -107,12 +143,20 @@ function love.load()
             self.insist = 1
             self.impatience = 1
         elseif down then
-            self.insist = self.insist + self.force*dt
+            self:forceImpulse(dt)
         end
         
         if not right and not left and not down then
             self.state = self.state - dt
             self.impatience = 0
+        end
+    end
+    function gentleman:forceImpulse(dt)
+        if self.insist < 100 then
+            self.insist = self.insist + self.force*dt
+        else
+            self.insist = 0
+            self.pop = true                                             --TODO to be intercepted and reset by draw
         end
     end
     
@@ -121,17 +165,23 @@ end
 
 function love.update(dt)
     world:update(dt)
-    --here we are going to create some keyboard events
     gentleman:update(dt)
-
+    glass:fixDeviation()                                                --NOTE needed to fix deviation due to weight
     
+    --filling sands
+    --sands:fill(width/2, 400*scale)    
+    sands:fill(width/2+200*scale, height/2)  
+    
+    --bulletmode                                                        --DBUG remove when not needed
+    if love.keyboard.isDown("up") then
+        sands:setBullet(true)
+    end  
 end
 
 function love.draw()
-    --Good evening gentlemen of the world.
-    love.graphics.print(glass.body:getAngle(), 10, 10)
+    --debug "console"
+    love.graphics.print(gentleman.insist, 10, 10)
     
-    --glass
     glass:draw()
     sands:draw()
 end
