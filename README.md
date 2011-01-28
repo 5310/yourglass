@@ -5,9 +5,8 @@ Yourglass: A Game of Giving
 Controls
 ------------
 
-Direction keys.
--	Left/right to rotate.
--	Down to be more insistent!
+The Blue gentleman has controllers over the `left`, `right` and `down` **navigation keys**.
+While the Red gentleman peruses the `a`, `s`, `d` **letter keys** in that order.
 
 
 Running the Game

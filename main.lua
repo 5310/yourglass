@@ -79,7 +79,7 @@ function love.load()
     origin = love.physics.newBody(world, width/2, height/2, 0, 0)
 
 
-    --Sands                                                             --TODO "Class" not yet ready for instancing
+    --Sands
     sands = {}
     sands.bodies = {}
     sands.shapes = {}
@@ -87,16 +87,17 @@ function love.load()
     sands.total = sands.seed
     sands.red = 0
     sands.blu = 0
-    sands.eq = 0.0                                                      --NOTE -1 means one side has won
+    sands.eq = 0.0
     sands.db = 0
     function sands:update(dt)
-        self:spawn(width/2+200*scale, height/2)
-        self:spawn(width/2-200*scale, height/2)
+        self:spawn(width/2+150*scale, height/2)
+        self:spawn(width/2-150*scale, height/2)
         sands:seedEq()
     end
     function sands:spawn(x, y)
         if self.seed>0 then
             self.bodies[self.seed] = love.physics.newBody(world, x, y, 0.02, 0)
+            --if math.random(0, 100) == 0 then size = 2*10*scale else size = 10*scale end
             self.shapes[self.seed] = love.physics.newCircleShape(self.bodies[self.seed], 0, 0, 10*scale)
             self.shapes[self.seed]:setFriction(0.1)
             self.seed = self.seed - 1
@@ -110,12 +111,12 @@ function love.load()
         end
         love.graphics.pop()
     end
-    function sands:setBullet(bool)                                      --DBUG does not work, that is to say, slows down too much when needed
+    function sands:setBullet(bool)                                      --DBUG does not work, that is to say, slows down too much to work
         for k,v in pairs(self.bodies) do
             v:setBullet(bool)
         end
     end
-    function sands:seedEq()                                            --can't get pcall() to work to check if body existis before calling
+    function sands:seedEq()
         eq = 0
         self.red = 0
         self.blu = 0
@@ -191,33 +192,40 @@ function love.load()
         love.graphics.polygon('fill', -210*scale, -230*scale, 210*scale, -230*scale, 236*scale, -270*scale, -236*scale, -270*scale)
         love.graphics.pop()
     end
-    function glass:fixDeviation()                                       --NOTE needed to fix deviation due to weight
+    function glass:fixDeviation()                                       --NOTE needed to fix ocassional deviation due to weight
         glass.body:setX(width/2)
         glass.body:setY(height/2)
     end
 
 
-    --gentleman                                                         --TODO "Class", not yet ready for instancing
-    gentleman = {}
-    gentleman.insist = 1
-    gentleman.force = 75
-    gentleman.impulse = 0.5*scale
-    gentleman.state = 0
-    gentleman.delay = 0
-    gentleman.impatience = 0
-    gentleman.pop = false
-    gentleman.control = {right="right", down="down", left="left"}
-    function gentleman:update(dt)
+    --Gentleman
+    Gentleman = {}
+    Gentleman.__index = Gentleman
+    function Gentleman.create(control)
+    local self = {}
+    setmetatable(self, Gentleman)
+    self.insist = 1
+    self.force = 75
+    self.impulse = 0.5*scale
+    self.state = 0
+    self.delay = 0
+    self.impatience = 0
+    self.pop = false
+    self.control = control
+    return self
+    end
+
+    function Gentleman:update(dt)
         right = love.keyboard.isDown(self.control.right)
         left = love.keyboard.isDown(self.control.left)
         down = love.keyboard.isDown(self.control.down)
         if right and self.state <= 0 and self.impatience == 0 then
-            glass.body:applyImpulse(-gentleman.impulse * self.insist, 0, 0, gentleman.impulse)
+            glass.body:applyImpulse(-self.impulse * self.insist, 0, 0, self.impulse)
             self.state = self.insist/self.force*self.delay
             self.insist = 1
             self.impatience = 1
         elseif left and self.state <= 0 and self.impatience == 0 then
-            glass.body:applyImpulse(gentleman.impulse * self.insist, 0, 0, gentleman.impulse)
+            glass.body:applyImpulse(self.impulse * self.insist, 0, 0, self.impulse)
             self.state = self.insist/self.force*self.delay
             self.insist = 1
             self.impatience = 1
@@ -230,7 +238,7 @@ function love.load()
             self.impatience = 0
         end
     end
-    function gentleman:forceImpulse(dt)
+    function Gentleman:forceImpulse(dt)
         if self.insist < 100 then
             self.insist = self.insist + self.force*dt
         else
@@ -239,12 +247,15 @@ function love.load()
         end
     end
 
+    red = Gentleman.create({right="right", down="down", left="left"})
+    blu = Gentleman.create({right="d", down="s", left="a"})
 
 end
 
 function love.update(dt)
     world:update(dt)
-    gentleman:update(dt)
+    red:update(dt)
+    blu:update(dt)
     glass:update(dt)
     sands:update(dt)
 
