@@ -89,7 +89,12 @@ function love.load()
     sands.blu = 0
     sands.eq = 0.0                                                      --NOTE -1 means one side has won
     sands.db = 0
-    function sands:fill(x, y)
+    function sands:update(dt)
+        self:spawn(width/2+200*scale, height/2)
+        self:spawn(width/2-200*scale, height/2)
+        sands:seedEq()
+    end
+    function sands:spawn(x, y)
         if self.seed>0 then
             self.bodies[self.seed] = love.physics.newBody(world, x, y, 0.02, 0)
             self.shapes[self.seed] = love.physics.newCircleShape(self.bodies[self.seed], 0, 0, 10*scale)
@@ -160,6 +165,10 @@ function love.load()
 
     glass.body:setAngularDamping(10*scale)
     glass.body:setAngle(PI/2)
+
+    function glass:update(dt)                                           --NOTE only for the hacky fix, sadly
+        glass:fixDeviation()
+    end
 
     function glass:draw()
         love.graphics.push()
@@ -236,12 +245,8 @@ end
 function love.update(dt)
     world:update(dt)
     gentleman:update(dt)
-    glass:fixDeviation()                                                --NOTE needed to fix deviation due to weight
-    sands:seedEq()
-
-    --filling sands
-    --sands:fill(width/2, 400*scale)
-    sands:fill(width/2+200*scale, height/2)
+    glass:update(dt)
+    sands:update(dt)
 
     --bulletmode                                                        --DBUG remove when not needed
     if love.keyboard.isDown("up") then
