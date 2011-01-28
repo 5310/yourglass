@@ -1,7 +1,7 @@
 function love.conf(t)
     t.title = "Yourglass: A PROTOTYPE of Giving"
     t.screen.vsync = true
-    t.screen.fsaa = 0
+    t.screen.fsaa = 4
     t.modules.joystick = false
     --t.modules.audio = true
     --t.modules.keyboard = true
