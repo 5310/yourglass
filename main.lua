@@ -17,12 +17,12 @@ function hsl(h, s, l)                                                   --LINK h
 end
 
 function pyramid(base)
-    total = 0
+    seed = 0
     while base>0 do
-        total = total + base
+        seed = seed + base
         base = base - 1
     end
-    return total
+    return seed
 end
 
 function polar(x, y)
@@ -55,17 +55,6 @@ function diffDeg(a, b)
     return x
 end
 
-function glasscolor()                                                      --TODO to be moved inside glass and changed
-    s = math.abs(sands.eq)
-    if sands.eq > 0 then
-        return hsl(  0, s, 140)
-    elseif sands.eq < 0 then
-        return hsl(150, s, 140)
-    else
-        return hsl(0, 0, 255)
-    end
-end
-
 function love.load()
 
 
@@ -94,15 +83,18 @@ function love.load()
     sands = {}
     sands.bodies = {}
     sands.shapes = {}
-    sands.count = pyramid(14)
+    sands.seed = pyramid(14)
+    sands.total = sands.seed
+    sands.red = 0
+    sands.blu = 0
     sands.eq = 0.0                                                      --NOTE -1 means one side has won
     sands.db = 0
     function sands:fill(x, y)
-        if self.count>0 then
-            self.bodies[self.count] = love.physics.newBody(world, x, y, 0.02, 0)
-            self.shapes[self.count] = love.physics.newCircleShape(self.bodies[self.count], 0, 0, 10*scale)
-            self.shapes[self.count]:setFriction(0.1)
-            self.count = self.count - 1
+        if self.seed>0 then
+            self.bodies[self.seed] = love.physics.newBody(world, x, y, 0.02, 0)
+            self.shapes[self.seed] = love.physics.newCircleShape(self.bodies[self.seed], 0, 0, 10*scale)
+            self.shapes[self.seed]:setFriction(0.1)
+            self.seed = self.seed - 1
         end
     end
     function sands:draw()
@@ -118,26 +110,34 @@ function love.load()
             v:setBullet(bool)
         end
     end
-    function sands:countEq()
+    function sands:seedEq()                                            --can't get pcall() to work to check if body existis before calling
         eq = 0
+        self.red = 0
+        self.blu = 0
         for k,v in pairs(sands.bodies) do
-            x = v:getX() - origin:getX()
-            y = v:getY() - origin:getY()
-            d = math.deg(polar(x, y))%360
-            a = math.deg((glass.body:getAngle()-PI/2)%(2*PI))
+            --~ if pcall(function() if v == null then return true end end) then
+                x = v:getX() - origin:getX()
+                y = v:getY() - origin:getY()
+                d = math.deg(polar(x, y))%360
+                a = math.deg((glass.body:getAngle()-PI/2)%(2*PI))
 
-            if math.sqrt(x*x + y*y) < 300*scale then
-                if diffDeg(d, a) > 90 then
-                    eq = eq - 1
-                elseif diffDeg(d, a) < 90 then
-                    eq = eq + 1
+                if math.sqrt(x*x + y*y) < 300*scale then
+                    if diffDeg(d, a) > 90 then
+                        eq = eq - 1
+                        self.red = self.red + 1
+                    elseif diffDeg(d, a) < 90 then
+                        eq = eq + 1
+                        self.blu = self.blu + 1
+                    end
+                --~ else
+                    --~ --lost grain
+                    --~ self.count = self.count - 1
+                    --~ v:destroy()
                 end
-            else
-                --lost grain
-                self.count = self.count - 1
-            end
+            --~ end
         end
-        self.eq = eq
+        self.eq = self.blu - self.red
+        self.total = self.blu + self.red
         self.db = eq
 
     end
@@ -152,8 +152,8 @@ function love.load()
     glass.shape = {}
     glass.shape.top     = love.physics.newPolygonShape(glass.body, -164*scale, -230*scale,  164*scale, -230*scale,  164*scale, -250*scale, -164*scale, -250*scale)
     glass.shape.bottom  = love.physics.newPolygonShape(glass.body, -164*scale,  230*scale,  164*scale,  230*scale,  164*scale,  250*scale, -164*scale,  250*scale)
-    glass.shape.right   = love.physics.newPolygonShape(glass.body,  20*scale, 0*scale,  164*scale, 230*scale,  164*scale, -230*scale, 200*scale, 0)
-    glass.shape.left    = love.physics.newPolygonShape(glass.body, -20*scale, 0*scale, -164*scale, 230*scale, -164*scale, -230*scale, -200*scale, 0)
+    glass.shape.right   = love.physics.newPolygonShape(glass.body,  20*scale, 0*scale,  164*scale, 230*scale,  200*scale,  230*scale, 200*scale, -230*scale, 164*scale, -230*scale)
+    glass.shape.left    = love.physics.newPolygonShape(glass.body, -20*scale, 0*scale, -164*scale, 230*scale, -200*scale,  230*scale, -200*scale, -230*scale, -164*scale, -230*scale)
     for k,v in pairs(glass.shape) do
         v:setFriction(0.1*scale)
     end
@@ -166,7 +166,17 @@ function love.load()
             love.graphics.setColor(glasscolor())
         love.graphics.translate(self.body:getX(), self.body:getY())
         love.graphics.rotate(self.body:getAngle())
-        --actual draw
+        --lobe
+        if sands.red > sands.total/2 then
+            love.graphics.setColor(hsl(  0, 200*(1 - (sands.red/(sands.total/2) - 1)), 140+115*(sands.red/(sands.total/2) - 1)))
+        else love.graphics.setColor(hsl(  0, 200, 140)) end
+        love.graphics.polygon('fill',  20*scale, 0*scale,  164*scale,  230*scale,  -164*scale,  230*scale, -20*scale, 0*scale)
+        if sands.blu > sands.total/2 then
+            love.graphics.setColor(hsl(150, 200*(1 - (sands.blu/(sands.total/2) - 1)), 140+115*(sands.blu/(sands.total/2) - 1)))
+        else love.graphics.setColor(hsl(150, 200, 140)) end
+        love.graphics.polygon('fill',  20*scale, 0*scale,  164*scale, -230*scale,  -164*scale, -230*scale, -20*scale, 0*scale)
+        --frame
+        love.graphics.setColor(255, 255, 255)
         love.graphics.polygon('fill',  20*scale, 0*scale,  164*scale, 230*scale,  210*scale, 230*scale,  64*scale, 0*scale,  210*scale, -230*scale,  164*scale, -230*scale)
         love.graphics.polygon('fill', -20*scale, 0*scale, -164*scale, 230*scale, -210*scale, 230*scale, -64*scale, 0*scale, -210*scale, -230*scale, -164*scale, -230*scale)
         love.graphics.polygon('fill', -210*scale,  230*scale, 210*scale,  230*scale, 236*scale,  270*scale, -236*scale,  270*scale)
@@ -213,7 +223,7 @@ function love.load()
         end
     end
     function gentleman:forceImpulse(dt)
-        if self.insist < 100 then
+        if self.insist < 1000 then
             self.insist = self.insist + self.force*dt
         else
             self.insist = 0
@@ -228,7 +238,7 @@ function love.update(dt)
     world:update(dt)
     gentleman:update(dt)
     glass:fixDeviation()                                                --NOTE needed to fix deviation due to weight
-    sands:countEq()
+    sands:seedEq()
 
     --filling sands
     --sands:fill(width/2, 400*scale)
@@ -242,7 +252,7 @@ end
 
 function love.draw()
     --debug "console"
-    love.graphics.print(sands.db, 10, 10)
+    love.graphics.print(sands.total, 10, 10)
 
     glass:draw()
     sands:draw()
