@@ -25,6 +25,46 @@ function pyramid(base)
     return total
 end
 
+function polar(x, y)
+    if x>0 then
+        a = math.atan(y/x)
+        if y<0 then
+            a = 2*PI+a
+        end
+    elseif x<0 then
+        a = PI+math.atan(y/x)
+    else
+        if y > 0 then
+            a = PI/2
+        elseif y < 0 then
+            a = PI*1.5
+        else
+            a = 0
+        end
+    end
+
+    d = math.sqrt(x*x + y*y)
+    return a, d
+end
+
+function diffDeg(a, b)
+    x = math.abs(a-b)
+    if x > 180 then
+        x = 360 - x
+    end
+    return x
+end
+
+function glasscolor()                                                      --TODO to be moved inside glass and changed
+    s = math.abs(sands.eq)
+    if sands.eq > 0 then
+        return hsl(  0, s, 140)
+    elseif sands.eq < 0 then
+        return hsl(150, s, 140)
+    else
+        return hsl(0, 0, 255)
+    end
+end
 
 function love.load()
 
@@ -39,8 +79,8 @@ function love.load()
     love.graphics.setMode(width, height, fullscreen)
     love.graphics.setBackgroundColor( hsl(138, 20, 50) )
     PI = 3.14139
-    
-    
+
+
     --physics
     gravity = 500*scale
     meter = 50*scale
@@ -48,14 +88,15 @@ function love.load()
     world:setGravity(0, gravity)
     world:setMeter(meter)
     origin = love.physics.newBody(world, width/2, height/2, 0, 0)
-    
-    
+
+
     --Sands                                                             --TODO "Class" not yet ready for instancing
     sands = {}
     sands.bodies = {}
     sands.shapes = {}
-    sands.count = pyramid(15)
+    sands.count = pyramid(14)
     sands.eq = 0.0                                                      --NOTE -1 means one side has won
+    sands.db = 0
     function sands:fill(x, y)
         if self.count>0 then
             self.bodies[self.count] = love.physics.newBody(world, x, y, 0.02, 0)
@@ -67,47 +108,67 @@ function love.load()
     function sands:draw()
         love.graphics.push()
         love.graphics.setColor(255, 255, 255)
-        for k,v in pairs(sands.bodies) do 
-            love.graphics.circle('fill', v:getX(), v:getY(), sands.shapes[k]:getRadius())
+        for k,v in pairs(self.bodies) do
+            love.graphics.circle('fill', v:getX(), v:getY(), self.shapes[k]:getRadius())
         end
         love.graphics.pop()
     end
     function sands:setBullet(bool)                                      --DBUG does not work, that is to say, slows down too much when needed
-        for k,v in pairs(sands.bodies) do 
+        for k,v in pairs(self.bodies) do
             v:setBullet(bool)
         end
     end
-    function sands:countEq()                                            --TODO write function to see who's winning
-        --count sand equilibrium here, make it fast
+    function sands:countEq()
+        eq = 0
+        for k,v in pairs(sands.bodies) do
+            x = v:getX() - origin:getX()
+            y = v:getY() - origin:getY()
+            d = math.deg(polar(x, y))%360
+            a = math.deg((glass.body:getAngle()-PI/2)%(2*PI))
+
+            if math.sqrt(x*x + y*y) < 300*scale then
+                if diffDeg(d, a) > 90 then
+                    eq = eq - 1
+                elseif diffDeg(d, a) < 90 then
+                    eq = eq + 1
+                end
+            else
+                --lost grain
+                self.count = self.count - 1
+            end
+        end
+        self.eq = eq
+        self.db = eq
+
     end
-    
-    
+
+
     --glass
     glass = {}
-    
+
     glass.body = love.physics.newBody(world, width/2, height/2, 10, 10)
     glass.body:setBullet(true)
     glass.joint = love.physics.newRevoluteJoint(origin, glass.body, origin:getX(), origin:getY())
     glass.shape = {}
     glass.shape.top     = love.physics.newPolygonShape(glass.body, -164*scale, -230*scale,  164*scale, -230*scale,  164*scale, -250*scale, -164*scale, -250*scale)
     glass.shape.bottom  = love.physics.newPolygonShape(glass.body, -164*scale,  230*scale,  164*scale,  230*scale,  164*scale,  250*scale, -164*scale,  250*scale)
-    glass.shape.right   = love.physics.newPolygonShape(glass.body,  18*scale, 0*scale,  164*scale, 230*scale,  164*scale, -230*scale, 200*scale, 0)
-    glass.shape.left    = love.physics.newPolygonShape(glass.body, -18*scale, 0*scale, -164*scale, 230*scale, -164*scale, -230*scale, -200*scale, 0)
-    for k,v in pairs(glass.shape) do 
+    glass.shape.right   = love.physics.newPolygonShape(glass.body,  20*scale, 0*scale,  164*scale, 230*scale,  164*scale, -230*scale, 200*scale, 0)
+    glass.shape.left    = love.physics.newPolygonShape(glass.body, -20*scale, 0*scale, -164*scale, 230*scale, -164*scale, -230*scale, -200*scale, 0)
+    for k,v in pairs(glass.shape) do
         v:setFriction(0.1*scale)
     end
-    
+
     glass.body:setAngularDamping(10*scale)
     glass.body:setAngle(PI/2)
 
     function glass:draw()
         love.graphics.push()
-        love.graphics.setColor(255, 255, 255)
+            love.graphics.setColor(glasscolor())
         love.graphics.translate(self.body:getX(), self.body:getY())
         love.graphics.rotate(self.body:getAngle())
         --actual draw
-        love.graphics.polygon('fill',  18*scale, 0*scale,  164*scale, 230*scale,  210*scale, 230*scale,  64*scale, 0*scale,  210*scale, -230*scale,  164*scale, -230*scale)
-        love.graphics.polygon('fill', -18*scale, 0*scale, -164*scale, 230*scale, -210*scale, 230*scale, -64*scale, 0*scale, -210*scale, -230*scale, -164*scale, -230*scale)
+        love.graphics.polygon('fill',  20*scale, 0*scale,  164*scale, 230*scale,  210*scale, 230*scale,  64*scale, 0*scale,  210*scale, -230*scale,  164*scale, -230*scale)
+        love.graphics.polygon('fill', -20*scale, 0*scale, -164*scale, 230*scale, -210*scale, 230*scale, -64*scale, 0*scale, -210*scale, -230*scale, -164*scale, -230*scale)
         love.graphics.polygon('fill', -210*scale,  230*scale, 210*scale,  230*scale, 236*scale,  270*scale, -236*scale,  270*scale)
         love.graphics.polygon('fill', -210*scale, -230*scale, 210*scale, -230*scale, 236*scale, -270*scale, -236*scale, -270*scale)
         love.graphics.pop()
@@ -116,8 +177,8 @@ function love.load()
         glass.body:setX(width/2)
         glass.body:setY(height/2)
     end
-    
-    
+
+
     --gentleman                                                         --TODO "Class", not yet ready for instancing
     gentleman = {}
     gentleman.insist = 1
@@ -145,7 +206,7 @@ function love.load()
         elseif down then
             self:forceImpulse(dt)
         end
-        
+
         if not right and not left and not down then
             self.state = self.state - dt
             self.impatience = 0
@@ -159,29 +220,30 @@ function love.load()
             self.pop = true                                             --TODO to be intercepted and reset by draw
         end
     end
-    
-    
+
+
 end
 
 function love.update(dt)
     world:update(dt)
     gentleman:update(dt)
     glass:fixDeviation()                                                --NOTE needed to fix deviation due to weight
-    
+    sands:countEq()
+
     --filling sands
-    --sands:fill(width/2, 400*scale)    
-    sands:fill(width/2+200*scale, height/2)  
-    
+    --sands:fill(width/2, 400*scale)
+    sands:fill(width/2+200*scale, height/2)
+
     --bulletmode                                                        --DBUG remove when not needed
     if love.keyboard.isDown("up") then
         sands:setBullet(true)
-    end  
+    end
 end
 
 function love.draw()
     --debug "console"
-    love.graphics.print(gentleman.insist, 10, 10)
-    
+    love.graphics.print(sands.db, 10, 10)
+
     glass:draw()
     sands:draw()
 end
