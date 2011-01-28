@@ -83,7 +83,7 @@ function love.load()
     sands = {}
     sands.bodies = {}
     sands.shapes = {}
-    sands.seed = pyramid(14)
+    sands.seed = 100 --pyramid(13)
     sands.total = sands.seed
     sands.red = 0
     sands.blu = 0
@@ -163,7 +163,6 @@ function love.load()
 
     function glass:draw()
         love.graphics.push()
-            love.graphics.setColor(glasscolor())
         love.graphics.translate(self.body:getX(), self.body:getY())
         love.graphics.rotate(self.body:getAngle())
         --lobe
@@ -223,7 +222,7 @@ function love.load()
         end
     end
     function gentleman:forceImpulse(dt)
-        if self.insist < 1000 then
+        if self.insist < 100 then
             self.insist = self.insist + self.force*dt
         else
             self.insist = 0
