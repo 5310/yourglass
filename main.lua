@@ -79,25 +79,26 @@ function love.load()
     origin = love.physics.newBody(world, width/2, height/2, 0, 0)
 
 
-    --color
+    --assets
+    require("banter.lua")
     function setRed()
         if sands.red > sands.total/2 then
             love.graphics.setColor(hsl(  0, 200*(1 - (sands.red/(sands.total/2) - 1)), 140+115*(sands.red/(sands.total/2) - 1)))
         else love.graphics.setColor(hsl(  0, 200, 140)) end
     end
-
     function setBlu()
         if sands.blu > sands.total/2 then
             love.graphics.setColor(hsl(150, 200*(1 - (sands.blu/(sands.total/2) - 1)), 140+115*(sands.blu/(sands.total/2) - 1)))
         else love.graphics.setColor(hsl(150, 200, 140)) end
     end
+    font = love.graphics.newFont( "Chunkfive.otf", 64*scale )
 
 
     --Sands
     sands = {}
     sands.bodies = {}
     sands.shapes = {}
-    sands.seed = 100 --pyramid(13)
+    sands.seed = 10 --pyramid(13)
     sands.total = sands.seed
     sands.red = 0
     sands.blu = 0
@@ -252,7 +253,8 @@ function love.load()
             self.impatience = 0
         end
 
-        self.tension = (self.insist/10+math.abs(sands.eq)/sands.total*5)*scale
+        if math.abs(sands.eq)/sands.total < 1 then self.tension = (self.insist/10+math.abs(sands.eq)/sands.total*5)*scale
+        else self.tension = self.tension*0.95 end
     end
     function Gentleman:forceImpulse(dt)
         if self.insist < 100 then
@@ -273,6 +275,52 @@ function love.load()
     red = Gentleman.create({right="d", down="s", left="a"}, {width*0.2, height*0.8}, setRed)
     blu = Gentleman.create({right="right", down="down", left="left"}, {width*0.8, height*0.8}, setBlu)
 
+
+    --banter
+    banter = {}
+    banter.memory = sands.eq                                            --NOTE to compare the current sands.eq to
+    banter.side = 0.2                                                   --NOTE 0 means white, and giving colors text briefly
+    banter.giver = ""
+    banter.taker = ""
+    function banter:update(dt)
+        if sands.eq > self.memory then
+            self.side = 1
+        elseif sands.eq < self.memory then
+            self.side = -1
+        else
+            self.side = self.side*0.95                                  --TODO should make this dt aware
+            if self.side == 0 then self:rephrase()                      --NOTE unexpected effect, I like it better than the usual
+            elseif math.abs(self.side) < 0.1 then self.side = 0 end
+        end
+        self.memory = sands.eq
+    end
+    function banter:draw()
+        --love.graphics.push()                                          --NOTE pushing or pulling messes up text, bug in LOVE2D itself
+        local tension = 5*scale*math.abs(sands.eq/sands.total)
+        love.graphics.setFont( font )
+        if math.abs(sands.eq/sands.total) == 1 and self.side == 0 then
+            if sands.eq > 0 then       love.graphics.setColor(hsl(0,200,140))
+            elseif sands.eq < 0 then   love.graphics.setColor(hsl(150,200,140)) end
+            love.graphics.printf("Why, you're welcome!", 0, height*0.1-48*scale, width, "center")
+            love.graphics.setColor(255, 255, 255)
+            love.graphics.printf("...", 0, height*0.9-48*scale, width, "center")
+        else
+            if self.side > 0 then       love.graphics.setColor(hsl(0,200,140))
+            elseif self.side < 0 then   love.graphics.setColor(hsl(150,200,140))
+            else                        love.graphics.setColor(255, 255, 255, 255) end
+            love.graphics.printf(self.giver, math.random(-tension, tension), height*0.1-48*scale+math.random(-tension, tension), width, "center")
+            if self.side < 0 then       love.graphics.setColor(hsl(0,200,140))
+            elseif self.side > 0 then   love.graphics.setColor(hsl(150,200,140))
+            else                        love.graphics.setColor(255, 255, 255) end
+            love.graphics.printf(self.taker, math.random(-tension, tension), height*0.9-48*scale+math.random(-tension, tension), width, "center")
+        end
+        --love.graphics.push()
+    end
+    function banter:rephrase()
+        self.giver = giver[math.random(#giver)]
+        self.taker = taker[math.random(#taker)]
+    end
+
 end
 
 function love.update(dt)
@@ -281,6 +329,7 @@ function love.update(dt)
     blu:update(dt)
     glass:update(dt)
     sands:update(dt)
+    banter:update(dt)
 
     --bulletmode                                                        --DBUG remove when not needed
     if love.keyboard.isDown("up") then
@@ -290,10 +339,11 @@ end
 
 function love.draw()
     --debug "console"
-    love.graphics.print(red.tension, 10, 10)
+    --love.graphics.print(banter.side, 10, 10)
 
     glass:draw()
     sands:draw()
     red:draw()
     blu:draw()
+    banter:draw()
 end

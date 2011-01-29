@@ -2,8 +2,14 @@ Yourglass: A Game of Giving
 ===========================
 
 
+**Be a Toff: Donate Banter!**
+----------------------------------
+
+**All the sporting verbal-exchange featured so dizzyingly is stored in the file `banter.lua`. It's simple enough to edit, two _tables_ with text suitable for the gentlemen; please add in some of your own!**
+
+
 Controls
-------------
+--------
 
 The Blue gentleman has controllers over the `left`, `right` and `down` **navigation keys**.
 While the Red gentleman peruses the `a`, `s`, `d` **letter keys** in that order.
