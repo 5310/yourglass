@@ -98,7 +98,7 @@ function love.load()
     sands = {}
     sands.bodies = {}
     sands.shapes = {}
-    sands.seed = 10 --pyramid(13)
+    sands.seed = 100 --pyramid(13)
     sands.total = sands.seed
     sands.red = 0
     sands.blu = 0
