@@ -79,6 +79,20 @@ function love.load()
     origin = love.physics.newBody(world, width/2, height/2, 0, 0)
 
 
+    --color
+    function setRed()
+        if sands.red > sands.total/2 then
+            love.graphics.setColor(hsl(  0, 200*(1 - (sands.red/(sands.total/2) - 1)), 140+115*(sands.red/(sands.total/2) - 1)))
+        else love.graphics.setColor(hsl(  0, 200, 140)) end
+    end
+
+    function setBlu()
+        if sands.blu > sands.total/2 then
+            love.graphics.setColor(hsl(150, 200*(1 - (sands.blu/(sands.total/2) - 1)), 140+115*(sands.blu/(sands.total/2) - 1)))
+        else love.graphics.setColor(hsl(150, 200, 140)) end
+    end
+
+
     --Sands
     sands = {}
     sands.bodies = {}
@@ -176,13 +190,9 @@ function love.load()
         love.graphics.translate(self.body:getX(), self.body:getY())
         love.graphics.rotate(self.body:getAngle())
         --lobe
-        if sands.red > sands.total/2 then
-            love.graphics.setColor(hsl(  0, 200*(1 - (sands.red/(sands.total/2) - 1)), 140+115*(sands.red/(sands.total/2) - 1)))
-        else love.graphics.setColor(hsl(  0, 200, 140)) end
+        setRed()
         love.graphics.polygon('fill',  20*scale, 0*scale,  164*scale,  230*scale,  -164*scale,  230*scale, -20*scale, 0*scale)
-        if sands.blu > sands.total/2 then
-            love.graphics.setColor(hsl(150, 200*(1 - (sands.blu/(sands.total/2) - 1)), 140+115*(sands.blu/(sands.total/2) - 1)))
-        else love.graphics.setColor(hsl(150, 200, 140)) end
+        setBlu()
         love.graphics.polygon('fill',  20*scale, 0*scale,  164*scale, -230*scale,  -164*scale, -230*scale, -20*scale, 0*scale)
         --frame
         love.graphics.setColor(255, 255, 255)
@@ -201,7 +211,7 @@ function love.load()
     --Gentleman
     Gentleman = {}
     Gentleman.__index = Gentleman
-    function Gentleman.create(control)
+    function Gentleman.create(control, position, setColor)
     local self = {}
     setmetatable(self, Gentleman)
     self.insist = 1
@@ -212,6 +222,10 @@ function love.load()
     self.impatience = 0
     self.pop = false
     self.control = control
+    self.position = position
+    self.setColor = setColor
+    self.size = 20*scale
+    self.tension = 0
     return self
     end
 
@@ -237,6 +251,8 @@ function love.load()
             self.state = self.state - dt
             self.impatience = 0
         end
+
+        self.tension = (self.insist/10+math.abs(sands.eq)/sands.total*5)*scale
     end
     function Gentleman:forceImpulse(dt)
         if self.insist < 100 then
@@ -246,9 +262,16 @@ function love.load()
             self.pop = true                                             --TODO to be intercepted and reset by draw
         end
     end
+    function Gentleman:draw()
+        love.graphics.push()
+        self.setColor()
+        local size = self.size*(1+self.insist/20)
+        love.graphics.circle('fill', self.position[1]+math.random(-self.tension, self.tension), self.position[2]+math.random(-self.tension, self.tension), size, 32)
+        love.graphics.pop()
+    end
 
-    red = Gentleman.create({right="right", down="down", left="left"})
-    blu = Gentleman.create({right="d", down="s", left="a"})
+    red = Gentleman.create({right="d", down="s", left="a"}, {width*0.2, height*0.8}, setRed)
+    blu = Gentleman.create({right="right", down="down", left="left"}, {width*0.8, height*0.8}, setBlu)
 
 end
 
@@ -267,8 +290,10 @@ end
 
 function love.draw()
     --debug "console"
-    love.graphics.print(sands.total, 10, 10)
+    love.graphics.print(red.tension, 10, 10)
 
     glass:draw()
     sands:draw()
+    red:draw()
+    blu:draw()
 end
