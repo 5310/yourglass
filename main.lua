@@ -55,6 +55,17 @@ function diffDeg(a, b)
     return x
 end
 
+function setRed()
+    if sands.red > sands.total/2 then
+        love.graphics.setColor(hsl(  0, 200*(1 - (sands.red/(sands.total/2) - 1)), 140+115*(sands.red/(sands.total/2) - 1)))
+    else love.graphics.setColor(hsl(  0, 200, 140)) end
+end
+function setBlu()
+    if sands.blu > sands.total/2 then
+        love.graphics.setColor(hsl(150, 200*(1 - (sands.blu/(sands.total/2) - 1)), 140+115*(sands.blu/(sands.total/2) - 1)))
+    else love.graphics.setColor(hsl(150, 200, 140)) end
+end
+
 function love.load()
 
 
@@ -81,16 +92,6 @@ function love.load()
 
     --assets
     require("banter.lua")
-    function setRed()
-        if sands.red > sands.total/2 then
-            love.graphics.setColor(hsl(  0, 200*(1 - (sands.red/(sands.total/2) - 1)), 140+115*(sands.red/(sands.total/2) - 1)))
-        else love.graphics.setColor(hsl(  0, 200, 140)) end
-    end
-    function setBlu()
-        if sands.blu > sands.total/2 then
-            love.graphics.setColor(hsl(150, 200*(1 - (sands.blu/(sands.total/2) - 1)), 140+115*(sands.blu/(sands.total/2) - 1)))
-        else love.graphics.setColor(hsl(150, 200, 140)) end
-    end
     font = love.graphics.newFont( "Chunkfive.otf", 64*scale )
 
 
@@ -306,12 +307,12 @@ function love.load()
             love.graphics.setColor(255, 255, 255)
             love.graphics.printf("...", 0, height*0.9-48*scale, width, "center")
         else
-            if self.side > 0 then       if self.memory2 < 0 then banter:rephrase() end love.graphics.setColor(hsl(0,200,140))      
-            elseif self.side < 0 then   if self.memory2 > 0 then banter:rephrase() end love.graphics.setColor(hsl(150,200,140))    
+            if self.side > 0 then       if self.memory2 < 0 then banter:rephrase() end setRed()
+            elseif self.side < 0 then   if self.memory2 > 0 then banter:rephrase() end setBlu()
             else                        love.graphics.setColor(255, 255, 255, 255) end
             love.graphics.printf(self.giver, math.random(-tension, tension), height*0.1-48*scale+math.random(-tension, tension), width, "center")
-            if self.side < 0 then       love.graphics.setColor(hsl(0,200,140))
-            elseif self.side > 0 then   love.graphics.setColor(hsl(150,200,140))
+            if self.side < 0 then       setRed()
+            elseif self.side > 0 then   setBlu()
             else                        love.graphics.setColor(255, 255, 255) end
             love.graphics.printf(self.taker, math.random(-tension, tension), height*0.9-48*scale+math.random(-tension, tension), width, "center")
         end
