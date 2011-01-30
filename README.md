@@ -85,10 +85,10 @@ There you go, a standalone Windows binary `yourglass.exe`. Yes, you can have it.
 
 - - -
 
-[1]: http://dl.dropbox.com/u/164058/yourglass/yourglass.love			"Windows Executable Zip"
+[1]: http://dl.dropbox.com/u/164058/yourglass/yourglass.zip			"Windows Executable Zip"
 [2]: http://dl.dropbox.com/u/164058/yourglass/yourglass.exe			"Standalone Iconless .exe"
 [3]: http://love2d.org/										"LÖVE"
-[4]: http://dl.dropbox.com/u/164058/yourglass/yourglass.zip			"Universal .love"
+[4]: http://dl.dropbox.com/u/164058/yourglass/yourglass.love			"Universal .love"
 [5]: http://help.github.com/git-cheat-sheets/						"Github Git Cheat-sheet"
 [6]: http://love2d.org/wiki/Game_Distribution						"LÖVE Wiki Article on Distribution"
 [7]: http://love2d.org/forums/viewtopic.php?f=3&t=1428&p=19103&hilit=.exe+.dll#p19103
