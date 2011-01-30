@@ -28,20 +28,20 @@ Your options are as follows:
 
 If you are on **Windows**:
 
-1. 	Download **`yourglass.zip`** from [here](1).
+1. 	Download **`yourglass.zip`** from [here][1].
 2. 	Extract to anywhere, let's say... the Desktop, yes.
 3. 	Open the folder `yourglass`.
 4. 	Double-click `yourglass.exe` to play.
 
 If you are on **Windows**, like **standalone executable** and can do **without the pretty icon**:
 
-1. 	Download the standalone **`yourglass.exe`** file from [here](1). I cannot, for the love of the Queen, add the icon.
+1. 	Download the standalone **`yourglass.exe`** file from [here][1]. I cannot, for the love of the Queen, add the icon.
 2. 	Double-click to play!
 
 If you are on **Linux**, **OSX** or **elsewhere**, or, perhaps if you are as rugged and handsome as we are, you shall do the following:
 
-1. 	First, install [LÖVE](2) for you system, if you haven't.
-2. 	Download **`yourglass.love`**, the gentlemanly love package from [here](1).
+1. 	First, install [LÖVE][2] for you system, if you haven't.
+2. 	Download **`yourglass.love`**, the gentlemanly love package from [here][1].
 3. 	Double-click to play!
 
 Can't download the files? Oh dear me. Are you sure the burly `download` button up there doesn't work either?
@@ -55,7 +55,7 @@ Or not, perhaps.
 
 ### Gitting Stuff
 
-Keep forgetting git? This section may help. Or you may try the [cheat-sheet](3).
+Keep forgetting git? This section may help. Or you may try the [cheat-sheet][3].
 
 -	`git add .` will add all files from the working directory to the index.
 -	**`git add -u` will update your tracked files to the index, effectively taking a snapshot.**
@@ -70,9 +70,9 @@ Keep forgetting git? This section may help. Or you may try the [cheat-sheet](3).
 
 ### Packaging for Windows
 
-Not as easy as the [wiki](4) makes it sound. Though the unpacked `.dll`s are just as easily included with the `.exe`, we would rather have ONE singular file.
+Not as easy as the [wiki][4] makes it sound. Though the unpacked `.dll`s are just as easily included with the `.exe`, we would rather have ONE singular file.
 
-Instead, we follow this [fine and helpful post](5) first:
+Instead, we follow this [fine and helpful post][5] first:
 
 1. 	`tar cvf yourglass.tar love.exe DevIL.dll openal32.dll SDL.dll yourglass.love`
 2. 	`bzip2 -9 yourglass.tar`
