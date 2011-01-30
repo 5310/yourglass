@@ -1,5 +1,6 @@
 --utility
-function hsl(h, s, l)                                                   --LINK http://love2d.org/wiki/HSL_color
+function hsl(h, s, l, a)                                                 --LINK http://love2d.org/wiki/HSL_color
+    if a == nil then a = 255 end
     if s <= 0 then return l,l,l end
     h, s, l = h/256*6, s/255, l/255
     local c = (1-math.abs(2*l-1))*s
@@ -13,7 +14,8 @@ function hsl(h, s, l)                                                   --LINK h
     else r,g,b = c,0,x
     end return math.ceil((r+m)*256),
                math.ceil((g+m)*256),
-               math.ceil((b+m)*256)
+               math.ceil((b+m)*256),
+               a
 end
 
 function pyramid(base)
@@ -66,6 +68,17 @@ function setBlu()
     else love.graphics.setColor(hsl(150, 200, 140)) end
 end
 
+
+--gamestate
+--  0 = title+help screen           > 1
+--  1 = game started, seeding       > 2, (0)
+--  2 = game seeded, controls ready > 3, (0)
+--  3 = game set and match          > 1, (0)
+gamestate = 0
+
+require("overlay.lua")
+require("banter.lua")
+
 function love.load()
 
 
@@ -91,7 +104,6 @@ function love.load()
 
 
     --assets
-    require("banter.lua")
     font = love.graphics.newFont( "Chunkfive.otf", 64*scale )
 
 
@@ -214,24 +226,25 @@ function love.load()
     Gentleman = {}
     Gentleman.__index = Gentleman
     function Gentleman.create(control, position, setColor)
-    local self = {}
-    setmetatable(self, Gentleman)
-    self.insist = 1
-    self.force = 75
-    self.impulse = 0.5*scale
-    self.state = 0
-    self.delay = 0
-    self.impatience = 0
-    self.pop = false
-    self.control = control
-    self.position = position
-    self.setColor = setColor
-    self.size = 20*scale
-    self.tension = 0
-    return self
+        local self = {}
+        setmetatable(self, Gentleman)
+        self.insist = 1
+        self.force = 75
+        self.impulse = 0.5*scale
+        self.state = 0
+        self.delay = 0
+        self.impatience = 0
+        self.pop = false
+        self.control = control
+        self.position = position
+        self.setColor = setColor
+        self.size = 20*scale
+        self.tension = 0
+        return self
     end
 
     function Gentleman:update(dt)
+        --if not sands.seed == 0 then return end
         right = love.keyboard.isDown(self.control.right)
         left = love.keyboard.isDown(self.control.left)
         down = love.keyboard.isDown(self.control.down)
@@ -290,7 +303,7 @@ function love.load()
         elseif sands.eq < self.memory then
             self.side = -1
         else
-            self.side = self.side*0.95                                  --TODO should make this dt aware
+            self.side = self.side*0.925                                   --TODO should make this dt aware
             if self.side == 0 then self:rephrase()                      --NOTE unexpected effect, I like it better than the usual
             elseif math.abs(self.side) < 0.1 then self.side = 0 end
         end
@@ -306,6 +319,7 @@ function love.load()
             love.graphics.printf("Why, you're welcome!", 0, height*0.1-48*scale, width, "center")
             love.graphics.setColor(255, 255, 255)
             love.graphics.printf("...", 0, height*0.9-48*scale, width, "center")
+            if glass.body:getAngularVelocity() < 0.1 then gamestate = 3 glass.body:setAngularVelocity(0.1) restart.fadein = 0.01 end
         else
             if self.side > 0 then       if self.memory2 < 0 then banter:rephrase() end setRed()
             elseif self.side < 0 then   if self.memory2 > 0 then banter:rephrase() end setBlu()
@@ -316,7 +330,7 @@ function love.load()
             else                        love.graphics.setColor(255, 255, 255) end
             love.graphics.printf(self.taker, math.random(-tension, tension), height*0.9-48*scale+math.random(-tension, tension), width, "center")
         end
-        
+    
         self.memory2 = self.side
         --love.graphics.push()
     end
@@ -324,30 +338,50 @@ function love.load()
         self.giver = giver[math.random(#giver)]
         self.taker = taker[math.random(#taker)]
     end
-
+    
 end
 
 function love.update(dt)
-    world:update(dt)
-    red:update(dt)
-    blu:update(dt)
-    glass:update(dt)
-    sands:update(dt)
-    banter:update(dt)
-
-    --bulletmode                                                        --DBUG remove when not needed
-    if love.keyboard.isDown("up") then
-        sands:setBullet(true)
+    if gamestate == 0 then
+        title:update(dt)
+    elseif gamestate == 1 then
+        love.load()
+        gamestate = 2
+    elseif gamestate == 2 then
+        world:update(dt)
+        red:update(dt)
+        blu:update(dt)
+        glass:update(dt)
+        sands:update(dt)
+        banter:update(dt)
+        control:update(dt)
+    elseif gamestate == 3 then
+        restart:update(dt)
+        if love.keyboard.isDown(" ") then
+            gamestate = 1
+        end
     end
+    
+    eventControl()
 end
 
 function love.draw()
     --debug "console"
-    --love.graphics.print(banter.side, 10, 10)
-
+    --love.graphics.print(gamestate, 10, 10)
+   
+    
+    --title:draw()
     glass:draw()
     sands:draw()
     red:draw()
     blu:draw()
     banter:draw()
+    
+    if gamestate == 0 then                                               --NOTE esq to quit and space to start, fadein
+        title:draw()
+    elseif gamestate == 1 or gamestate == 2 then                                           --NOTE contols, fadeout
+        control:draw()
+    elseif gamestate == 3 then                                           --NOTE space to restart, fadein
+        restart:draw()
+    end
 end
