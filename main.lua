@@ -280,6 +280,7 @@ function love.load()
     banter = {}
     banter.memory = sands.eq                                            --NOTE to compare the current sands.eq to
     banter.side = 0.2                                                   --NOTE 0 means white, and giving colors text briefly
+    banter.memory2= banter.side                                         --NOTE I hate having these many memories, but it's needed for issue #9
     banter.giver = ""
     banter.taker = ""
     function banter:update(dt)
@@ -305,8 +306,8 @@ function love.load()
             love.graphics.setColor(255, 255, 255)
             love.graphics.printf("...", 0, height*0.9-48*scale, width, "center")
         else
-            if self.side > 0 then       love.graphics.setColor(hsl(0,200,140))
-            elseif self.side < 0 then   love.graphics.setColor(hsl(150,200,140))
+            if self.side > 0 then       if self.memory2 < 0 then banter:rephrase() end love.graphics.setColor(hsl(0,200,140))      
+            elseif self.side < 0 then   if self.memory2 > 0 then banter:rephrase() end love.graphics.setColor(hsl(150,200,140))    
             else                        love.graphics.setColor(255, 255, 255, 255) end
             love.graphics.printf(self.giver, math.random(-tension, tension), height*0.1-48*scale+math.random(-tension, tension), width, "center")
             if self.side < 0 then       love.graphics.setColor(hsl(0,200,140))
@@ -314,6 +315,8 @@ function love.load()
             else                        love.graphics.setColor(255, 255, 255) end
             love.graphics.printf(self.taker, math.random(-tension, tension), height*0.9-48*scale+math.random(-tension, tension), width, "center")
         end
+        
+        self.memory2 = self.side
         --love.graphics.push()
     end
     function banter:rephrase()
