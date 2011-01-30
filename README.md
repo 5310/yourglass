@@ -24,24 +24,24 @@ Running the Game
 ----------------
 
 The **beta** is here. Which, in your rugged world-view is the same as a stable release.  
-Your options are as follows:
+The **downloads** are in the top of this page. Your options are as follows:
 
 If you are on **Windows**:
 
-1. 	Download **`yourglass.zip`** from [here][1].
+1. 	Download **`yourglass.zip`**.
 2. 	Extract to anywhere, let's say... the Desktop, yes.
 3. 	Open the folder `yourglass`.
 4. 	Double-click `yourglass.exe` to play.
 
 If you are on **Windows**, like **standalone executable** and can do **without the pretty icon**:
 
-1. 	Download the standalone **`yourglass.exe`** file from [here][1]. I cannot, for the love of the Queen, add the icon.
+1. 	Download the standalone **`yourglass.exe`**. I cannot, for the love of the Queen, add the icon.
 2. 	Double-click to play!
 
 If you are on **Linux**, **OSX** or **elsewhere**, or, perhaps if you are as rugged and handsome as we are, you shall do the following:
 
-1. 	First, install [LÖVE][2] for you system, if you haven't.
-2. 	Download **`yourglass.love`**, the gentlemanly love package from [here][1].
+1. 	First, install [LÖVE][1] for you system, if you haven't.
+2. 	Download **`yourglass.love`**, the gentlemanly love package.
 3. 	Double-click to play!
 
 Can't download the files? Oh dear me. Are you sure the burly `download` button up there doesn't work either?
@@ -55,7 +55,7 @@ Or not, perhaps.
 
 ### Gitting Stuff
 
-Keep forgetting git? This section may help. Or you may try the [cheat-sheet][3].
+Keep forgetting git? This section may help. Or you may try the [cheat-sheet][2].
 
 -	`git add .` will add all files from the working directory to the index.
 -	**`git add -u` will update your tracked files to the index, effectively taking a snapshot.**
@@ -70,9 +70,9 @@ Keep forgetting git? This section may help. Or you may try the [cheat-sheet][3].
 
 ### Packaging for Windows
 
-Not as easy as the [wiki][4] makes it sound. Though the unpacked `.dll`s are just as easily included with the `.exe`, we would rather have ONE singular file.
+Not as easy as the [wiki][3] makes it sound. Though the unpacked `.dll`s are just as easily included with the `.exe`, we would rather have ONE singular file.
 
-Instead, we follow this [fine and helpful post][5] first:
+Instead, we follow this [fine and helpful post][4] first:
 
 1. 	`tar cvf yourglass.tar love.exe DevIL.dll openal32.dll SDL.dll yourglass.love`
 2. 	`bzip2 -9 yourglass.tar`
@@ -84,8 +84,7 @@ There you go, a standalone Windows binary `yourglass.exe`. Yes, you can have it.
 
 - - -
 
-[1]: https://github.com/5310/yourglass/archives/master		                "Downloads"
-[2]: http://love2d.org/										"LÖVE"
-[3]: http://help.github.com/git-cheat-sheets/						"Github Git Cheat-sheet"
-[4]: http://love2d.org/wiki/Game_Distribution						"LÖVE Wiki Article on Distribution"
-[5]: http://love2d.org/forums/viewtopic.php?f=3&t=1428&p=19103&hilit=.exe+.dll#p19103
+[1]: http://love2d.org/										"LÖVE"
+[2]: http://help.github.com/git-cheat-sheets/						"Github Git Cheat-sheet"
+[3]: http://love2d.org/wiki/Game_Distribution						"LÖVE Wiki Article on Distribution"
+[4]: http://love2d.org/forums/viewtopic.php?f=3&t=1428&p=19103&hilit=.exe+.dll#p19103
