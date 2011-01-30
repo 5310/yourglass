@@ -26,17 +26,20 @@ Running the Game
 The **beta** is here. Which, in your rugged world-view is the same as a stable release.  
 Your options are as follows:
 
-If you are on **Windows**.  
+If you are on **Windows**:
+
 1. 	Download [`yourglass.zip`](1).
 2. 	Extract to anywhere, let's say... the Desktop, yes.
 3. 	Open the folder `yourglass`.
 4. 	Double-click `yourglass.exe` to play.
 
-If you are on **Windows**, like **standalone executable** and can do **without the pretty icon**.  
+If you are on **Windows**, like **standalone executable** and can do **without the pretty icon**:
+
 1. 	Download the standalone [`yourglass.exe`][2] file. I cannot, for the love of the Queen, add the icon.
 2. 	Double-click to play!
 
-If you are on **Linux**, **OSX** or **elsewhere**, or, perhaps if you are as rugged and handsome as we are, you shall do the following.  
+If you are on **Linux**, **OSX** or **elsewhere**, or, perhaps if you are as rugged and handsome as we are, you shall do the following:
+
 1. 	First, install [LÖVE][3] for you system, if you haven't.
 2. 	Download [`yourglass.love`][4], the gentlemanly love package.
 3. 	Double-click to play!
