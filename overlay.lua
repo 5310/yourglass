@@ -35,6 +35,11 @@ function eventControl()
     if (love.keyboard.isDown("lalt") or love.keyboard.isDown("ralt")) and love.keyboard.isDown("f4") then
 		love.event.push('q')
     end
+    if love.keyboard.isDown("f4") then
+		if fullscreen == true then fullscreen = false
+		elseif fullscreen == false then fullscreen = true end
+		gamestate = 1
+    end
 end
 
 control = {}

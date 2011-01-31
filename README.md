@@ -23,8 +23,8 @@ Which you can do by holding the `down`/`s` button. Insisting too much is frowned
 Running the Game
 ----------------
 
-The **beta** is here. Which, in our rugged world-view, is the same as a stable release.  
-** The downloads are on top of this page.**  
+The **beta** is here. Which, in our rugged world-view, is the same as a stable release.
+** The downloads are on top of this page.**
 Your options are as follows:
 
 If you are on **Windows**:
@@ -33,11 +33,6 @@ If you are on **Windows**:
 2. 	Extract to anywhere, let's say... the Desktop, yes.
 3. 	Open the folder `yourglass`.
 4. 	Double-click `yourglass.exe` to play.
-
-If you are on **Windows**, like **standalone executable** and can do **without the pretty icon**:
-
-1. 	Download the standalone [**`yourglass.exe`**][2]. I cannot, for the love of the Queen, add the icon.
-2. 	Double-click to play!
 
 If you are on **Linux**, **OSX** or **elsewhere**, or, perhaps if you are as rugged and handsome as we are, you shall do the following:
 
@@ -51,7 +46,7 @@ Can't download the files? Oh dear me. Are you sure the burly `download` button u
 Rugged-Manly Stuff
 ------------------
 
-The following should not interest you if your only intents are playing. However, should you be, as we said, an adventurous individual, you will do well to read it.  
+The following should not interest you if your only intents are playing. However, should you be, as we said, an adventurous individual, you will do well to read it.
 Or not, perhaps.
 
 ### Gitting Stuff

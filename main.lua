@@ -72,7 +72,7 @@ function setScreen(w, h, f)
     scale = w/1600
     width = w
     height = h
-    love.graphics.setMode(width, height, f)
+    love.graphics.setMode(width, height, f, true, 4)
 end
 
 
@@ -83,6 +83,7 @@ end
 --  3 = game set and match          > 1, (0)
 gamestate = 0
 scale = 0.5
+fullscreen = false
 
 require("overlay.lua")
 require("banter.lua")
@@ -91,9 +92,13 @@ function love.load()
 
 
     --setup
-    width = love.graphics.getModes()[1].width
-    height = love.graphics.getModes()[1].height
-    fullscreen = true
+    if fullscreen == true then
+        width = love.graphics.getModes()[1].width
+        height = love.graphics.getModes()[1].height
+    else
+        width = 800
+        height = 450
+    end
     setScreen(width, height, fullscreen)
     love.graphics.setBackgroundColor( hsl(138, 20, 50) )
     PI = 3.14139
