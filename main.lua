@@ -91,8 +91,8 @@ function love.load()
 
 
     --setup
-    width = 1280
-    height = 800
+    width = love.graphics.getModes()[1].width
+    height = love.graphics.getModes()[1].height
     fullscreen = true
     setScreen(width, height, fullscreen)
     love.graphics.setBackgroundColor( hsl(138, 20, 50) )
