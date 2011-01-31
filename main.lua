@@ -68,6 +68,13 @@ function setBlu()
     else love.graphics.setColor(hsl(150, 200, 140)) end
 end
 
+function setScreen(w, h, f)
+    scale = w/1600
+    width = w
+    height = h
+    love.graphics.setMode(width, height, f)
+end
+
 
 --gamestate
 --  0 = title+help screen           > 1
@@ -75,6 +82,7 @@ end
 --  2 = game seeded, controls ready > 3, (0)
 --  3 = game set and match          > 1, (0)
 gamestate = 0
+scale = 0.5
 
 require("overlay.lua")
 require("banter.lua")
@@ -83,13 +91,10 @@ function love.load()
 
 
     --setup
-    width = 1600
-    height = 900
-    scale = 0.5
-    width = width*scale
-    height = height*scale
-    fullscreen = false
-    love.graphics.setMode(width, height, fullscreen)
+    width = 1280
+    height = 800
+    fullscreen = true
+    setScreen(width, height, fullscreen)
     love.graphics.setBackgroundColor( hsl(138, 20, 50) )
     PI = 3.14139
 
@@ -330,7 +335,7 @@ function love.load()
             else                        love.graphics.setColor(255, 255, 255) end
             love.graphics.printf(self.taker, math.random(-tension, tension), height*0.9-48*scale+math.random(-tension, tension), width, "center")
         end
-    
+
         self.memory2 = self.side
         --love.graphics.push()
     end
@@ -338,7 +343,7 @@ function love.load()
         self.giver = giver[math.random(#giver)]
         self.taker = taker[math.random(#taker)]
     end
-    
+
 end
 
 function love.update(dt)
@@ -361,22 +366,22 @@ function love.update(dt)
             gamestate = 1
         end
     end
-    
+
     eventControl()
 end
 
 function love.draw()
     --debug "console"
     --love.graphics.print(gamestate, 10, 10)
-   
-    
+
+
     --title:draw()
     glass:draw()
     sands:draw()
     red:draw()
     blu:draw()
     banter:draw()
-    
+
     if gamestate == 0 then                                               --NOTE esq to quit and space to start, fadein
         title:draw()
     elseif gamestate == 1 or gamestate == 2 then                                           --NOTE contols, fadeout
