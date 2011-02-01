@@ -56,7 +56,7 @@ function control:draw()
 	love.graphics.push()
 	love.graphics.setColor(255, 255, 255, 255*self.fadeout)
 	love.graphics.draw(self.red, red.position[1], red.position[2], 0, factor, factor, 128, 128)
-	love.graphics.draw(self.blu, blu.position[1], blu.position[1], 0, factor, factor, 0, 0)
+	love.graphics.draw(self.blu, blu.position[1], blu.position[2], 0, factor, factor, 128, 128)
 	love.graphics.pop()
 end
 
