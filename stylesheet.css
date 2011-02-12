@@ -49,7 +49,7 @@ blockquote:before {content: "“"; font-size: 2em; overflow: hidden; line-height
 blockquote:after  {content: "”"; font-size: 2em; overflow: hidden; line-height: 0em; position:relative; top:0.2em;}
 
 code { font-family: "ChunkFiveRoman"; }
-pre {background: #222; text-indent: 1em;} /*Remove indentation when download buttons are put it.*/
+pre {background: #222; text-align: center;}
 
 hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
 
@@ -66,4 +66,11 @@ footer { font-size: 0.75em; padding: 20px; text-align:center;}
 footnote { font-size: 0.75em; }
 .red { color: #e63232; }
 .blu { color: #2781e5; }
+.white { color: #FFF; }
 .noul { text-decoration: none; }
+
+.left { text-align: center; float: left;}
+.left code { text-indent: -0.5em; }
+.right { text-align: center; float: right;}
+.middle { text-align: center; }
+.middle code { text-indent: -0.5em; }
