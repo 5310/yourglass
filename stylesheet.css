@@ -69,8 +69,12 @@ footnote { font-size: 0.75em; }
 .white { color: #FFF; }
 .noul { text-decoration: none; }
 
-.left { text-align: center; float: left;}
-.left code { text-indent: -0.5em; }
+.left { text-align: center; float: left; }
+.left a { text-decoration: none; }
+.left code { text-indent: -0.5em; text-decoration: underline; }
 .right { text-align: center; float: right;}
+.right a { text-decoration: none; }
+.right code{ text-decoration: underline; }
 .middle { text-align: center; }
-.middle code { text-indent: -0.5em; }
+.middle a { text-decoration: none; }
+.middle code { text-indent: -0.5em; text-decoration: underline;}
