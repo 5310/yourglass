@@ -1,87 +1,245 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html lang="en">
+
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8"/>
 
-	<title>5310/yourglass @ GitHub</title>
-	
-	<style type="text/css">
-		body {
-  		margin-top: 1.0em;
-  		background-color: #2e3436;
-		  font-family: "Helvetica,Arial,FreeSans";
-  		color: #ffffff;
-    }
-    #container {
-      margin: 0 auto;
-      width: 700px;
-    }
-		h1 { font-size: 3.8em; color: #d1cbc9; margin-bottom: 3px; }
-		h1 .small { font-size: 0.4em; }
-		h1 a { text-decoration: none }
-		h2 { font-size: 1.5em; color: #d1cbc9; }
-    h3 { text-align: center; color: #d1cbc9; }
-    a { color: #d1cbc9; }
-    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
-    .download { float: right; }
-		pre { background: #000; color: #fff; padding: 15px;}
-    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
-    .footer { text-align:center; padding-top:30px; font-style: italic; }
-	</style>
-	
+    <title>Yourglass: A Game of Giving</title>
+    <meta name="description" content="The homepage of Yourglass: A Game of Giving. Made by Scio and inspired by Joy."/>
+    <meta name="author" content="Sayantan 'Scio' Chaudhuri" />
+
+    <link rel="stylesheet" href="stylesheet.css" />
 </head>
 
 <body>
-  <a href="http://github.com/5310/yourglass"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
 
-  <div id="container">
+    <div class="header">
+        <img src="header.png" alt="Yourglass: A Game of Giving, Made by Scio, oh but inspired by Joy!" />
 
-    <div class="download">
-      <a href="http://github.com/5310/yourglass/zipball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
-      <a href="http://github.com/5310/yourglass/tarball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
+        <div class="nav">
+        <a href="#what">What?</a> • <a href="#why">Why?</a> • <a href="#how">How?</a> • <a href="#where">Where?</a> • <a href="#who">Who?</a>
+        </div>
     </div>
 
-    <h1><a href="http://github.com/5310/yourglass">yourglass</a>
-      <span class="small">by <a href="http://github.com/5310">5310</a></span></h1>
+    <div class="content">
+        <div id="what">
+            <h2 id="what">What?</h2>
 
-    <div class="description">
-      Yourglass is a small two-player competetive game made with LÖVE for the Tigcompo Versus. BETA RELEASED!
+            <p>Yourglass is a game of giving for two gentlemen.<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></p>
+
+            <p>The idea is to excersize your <em>right to gift</em>, as throughly as possible.
+            The <strong>objective</strong> is to <strong>tilt the hourglass</strong><sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>, insistently abuse gravity, and <strong>empty your half of sand</strong><sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.
+            As to <em>how</em> you go about doing it— Ask <a href="#how">here</a>.</p>
+
+            <h3>(video)(images)</h3>
+
+            <p>Good, clean, gentlemanly fun.<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup></p>
+        </div>
+
+        <div id="why">
+            <h2>Why?</h2>
+
+            <p>One late afternoon in January<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>, my good friend-philosopher-and-guide Joy, in his highness<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup>, decided to, in the following order; make an RPG, not make an rpg, make the same rpg in a steampunk fashion, cancel it, make something new, cancel that, make something old instead. In the resulting flurry of activity he had decided to learn how to LÖVE<sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup>.</p>
+
+            <p>Being a true scholar, he learns by action; such dedication. He prompty conjured up a small gamelike activity to test his mettle on. The gem was as follows:</p>
+
+            <blockquote>Imagine an hourglass, pure and intricate. In it's duality lie two planets.
+            These planets — imagine one to be that of vile-creatures<sup id="fnref:8"><a href="#fn:8" rel="footnote">8</a></sup> and the other to be that akin to our Mother-Earth<sup id="fnref:9"><a href="#fn:9" rel="footnote">9</a></sup> — will struggle for influence.
+            As the Viles rise they shall drop seeds of corruption downwards. As the Earth rises it will bestow cleansing motes to the Viles in turn.
+            The singular player will have bear the burden of seeing his Earth rise, and overcome the vile opposition — A <em>toy</em> of allegoric proportions.
+            The <em>trick</em>, if I may so use a word so vulgar, is to make the balance as intricate the glass itself.</blockquote>
+
+            <p>(<em>I have taken the liberty of transliterating the above monolog to the best of my abilities.</em>)</p>
+
+            <p>As lively as my friend's mind is — truly a work of ceaseless marvel — I was skeptical of the idea and the resulting construct's <em>potentiel pour le plaisir</em>.
+            And after few words of forthright encouragement<sup id="fnref:10"><a href="#fn:10" rel="footnote">10</a></sup> I forgot all about it. Later that night, my sleep was interrupted with visions of unforseen majesty.
+            Quickly, shaking aside my slumber, I had put down to paper<sup id="fnref:11"><a href="#fn:11" rel="footnote">11</a></sup> an idea quite similar to Joy's own.</p>
+
+            <p>Except, it will be a game fit for gentlemen.<sup id="fnref:11"><a href="#fn:11" rel="footnote">11</a></sup></p>
+        </div>
+
+        <div id="how">
+            <h2>How?</h2>
+
+            <p>The controls are simple enough for even a simpleton to understand.</p>
+
+            <h3>(keymap image) (insistence example)</h3>
+
+            <p>The gentleman in <strong class="blu">blue</strong> will <strong>tilt the glass by</strong> means of the <code class="blu">left</code>/<code class="blu">right</code> buttons.
+            And to gird his loins in righteous <strong>insistence</strong>, he will <strong>press-and-hold</strong> <code class="blu">down</code>.<sup id="fnref:13"><a href="#fn:13" rel="footnote">13</a></sup></p>
+            <p>The gentleman in <strong class="red">red</strong> will reflect the same with the <code class="red">A</code>/<code class="red">D</code> and <code class="red">S</code> keys, in that order.</p>
+
+            <p>The game has no fixation with a certain rodent.<sup id="fnref:14"><a href="#fn:14" rel="footnote">14</a></sup></p>
+        </div>
+
+        <div id="where">
+            <h2>Where?</h2>
+
+            <p>Here, of course.<br/>
+            Choose your model, packaging is — as the say — on-the-house.</p>
+
+            <ul>
+                <li><a href="http://dl.dropbox.com/u/164058/yourglass/yourglass.zip" class="red"><strong>Windows without LÖVE.</strong></a></li>
+                <li><a href="http://dl.dropbox.com/u/164058/yourglass/yourglass.love" class="blu"><strong>For Linux, OSX, and/or Windows with LÖVE!"</strong></a></li>
+                <li><a href="http://love2d.org/" class="white"><strong>LÖVE itself, for all!</strong></a></li>
+            </ul>
+
+            <p>And, of course, for those rugged, adventerous individuals who wish to see how things work<sup id="fnref:16"><a href="#fn:16" rel="footnote">16</a></sup>, here's the <a href="https://github.com/5310/yourglass/">source</a> courtesy of the ever-so-helpful <a href="https://github.com/">Hub-o'-Gits</a>, you can <em>clone</em> the same by invoking:</p>
+
+            <pre>$ git clone git://github.com/5310/yourglass</pre>
+        </div>
+
+
+        <div id="who">
+            <h2>Who?</h2>
+
+            <p>The original idea was sired by the amazing Sir <a href="mailto:joy.bhattacherjee@gmail.com" class="red">Joy Bhattacherjee</a>. <sup id="fnref:18"><a href="#fn:18" rel="footnote">18</a></sup></p>
+
+            <p>And the game and the reimagined gameplay was made by yours truly, <a href="http://www.google.com/profiles/Sayantan.Chaudhuri" class="blu">Sayantan Chaudhuri</a>, Esq<sup id="fnref:19"><a href="#fn:19" rel="footnote">19</a></sup>.</p>
+
+            <p>The game was made using the the wonderful framework <a href="http://love2d.org/">LÖVE</a>.<sup id="fnref:20"><a href="#fn:20" rel="footnote">20</a></sup></p>
+            <p>And of course, <a href="https://github.com/">Github</a>. Without whom there would be no remote-hosting...:sniff: Those brave, self-less souls.</p>
+
+            <p>Lest we forget, if it weren't for the ongoing Tigcompo, lack of progress on my main project, and whatever I ate that night, there would have been zergs <em>in our base</em>, <em>eating of our dudes</em>.<sup id="fnref:21"><a href="#fn:21" rel="footnote">21</a></sup></p>
+
+            <p>The dashingly bold typeface used throughout Yourglass is called <a href="http://www.fontsquirrel.com/fonts/ChunkFive">Chunkfive</a>, by <a href="http://www.theleagueofmoveabletype.com/">The League of Movable Type</a>.</p>
+
+            We were <p>'Freeware Game Pick' on <a href="http://www.indiegames.com/blog/2011/02/freeware_game_pick_yourglass_s.html">The Indie Games Weblog</a>! <em>Michael Rose</em> is a man of excellent taste, no doubt.</p>
+        </div>
     </div>
-
-    <h2>Dependencies</h2>
-<p>LÖVE for Linux, OSX and Windows if you want to run the .love file.</p>
-<h2>Install</h2>
-<p>Download the .exe or the .zip if you're on Windows.
-Download the .love for peace elsewhere.</p>
-<h2>License</h2>
-<p>CC-BY-SA</p>
-<h2>Authors</h2>
-<p>Sayantan Chaudhuri (sayantan.chaudhuri@gmail.com)<br/><br/>      </p>
-<h2>Contact</h2>
-<p>Sayantan Chaudhuri (sayantan.chaudhuri@gmail.com)<br/></p>
-
-
-    <h2>Download</h2>
-    <p>
-      You can download this project in either
-      <a href="http://github.com/5310/yourglass/zipball/master">zip</a> or
-      <a href="http://github.com/5310/yourglass/tarball/master">tar</a> formats.
-    </p>
-    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-      by running:
-      <pre>$ git clone git://github.com/5310/yourglass</pre>
-    </p>
 
     <div class="footer">
-      get the source code on GitHub : <a href="http://github.com/5310/yourglass">5310/yourglass</a>
+        <hr/>
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/InteractiveResource" property="dct:title" rel="dct:type">Yourglass: A Game of Giving</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="http://5310.github.com/yourglass" property="cc:attributionName" rel="cc:attributionURL">Sayantan "Scio" Chaudhuri & Joy Bhattacherjee</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.
+        <hr/>
     </div>
 
-  </div>
+    <div class="footnote"></div>
+        <ol>
+            <li id="fn:1">
+            <p>Gentlemen of either gender.
+            &#160;<a href="#fnref:1" class="noul" rev="footnote" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+            </li>
 
-  
+            <li id="fn:2">
+            <p>Or <em>yourglass</em>, if you will. Certainly not mine.
+            &#160;<a href="#fnref:2" class="noul" rev="footnote" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+            </li>
+
+            <li id="fn:3">
+            <p>So to speak...They are not fat, merely robust.
+            &#160;<a href="#fnref:3" class="noul" rev="footnote" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+            </li>
+
+            <li id="fn:4">
+            <p>Continued physical well-being of your keyboard is not guaranteed.
+            &#160;<a href="#fnref:4" class="noul" rev="footnote" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+            </li>
+
+            <li id="fn:5">
+            <p>23<sup>rd</sup> January 2011, to be pedantic.
+            &#160;<a href="#fnref:5" class="noul" rev="footnote" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+            </li>
+
+            <li id="fn:6">
+            <p>Think <em>opium</em> instead of <em>royal-plurals</em>. Then, think <em>manic-enthusiasm</em>.
+            &#160;<a href="#fnref:6" class="noul" rev="footnote" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+            </li>
+
+            <li id="fn:7">
+            <p>You cannot <em>possibly</em> suggest a jest wittier than those already uttered. Give up.
+            &#160;<a href="#fnref:7" class="noul" rev="footnote" title="Jump back to footnote 7 in the text">&#8617;</a></p>
+            </li>
+
+            <li id="fn:8">
+            <p>He said "<em>the Zerg</em>". Believe me.
+            &#160;<a href="#fnref:8" class="noul" rev="footnote" title="Jump back to footnote 8 in the text">&#8617;</a></p>
+            </li>
+
+            <li id="fn:9">
+            <p>And likewise, "<em>a Terran planet</em>".
+            &#160;<a href="#fnref:9" class="noul" rev="footnote" title="Jump back to footnote 9 in the text">&#8617;</a></p>
+            </li>
+
+            <li id="fn:10">
+            <p>"It sucks. But you gotta start somewhere. Do it."
+            &#160;<a href="#fnref:10" class="noul" rev="footnote" title="Jump back to footnote 10 in the text">&#8617;</a></p>
+            </li>
+
+            <li id="fn:11">
+            <p>Well, <em>pixel</em>. You know how it is.
+            &#160;<a href="#fnref:11" class="noul" rev="footnote" title="Jump back to footnote 11 in the text">&#8617;</a></p>
+            </li>
+
+            <li id="fn:12">
+            <p>Which I would enter in the <a href="http://www.tigsource.com/2011/01/18/tigcompo-versus/">TIGcompo: Versus</a> without telling him...
+            &#160;<a href="#fnref:12" class="noul" rev="footnote" title="Jump back to footnote 12 in the text">&#8617;</a></p>
+            </li>
+
+            <li id="fn:13">
+            <p>Try not to visualize it.
+            &#160;<a href="#fnref:13" class="noul" rev="footnote" title="Jump back to footnote 13 in the text">&#8617;</a></p>
+            </li>
+
+            <li id="fn:14">
+            <p>Mice are for cats. Real gentlemen use keyboards. Possibly ones which go <em>clickety-clack</em>, like the IBM Model M<sup id="fnref:15"><a href="#fn:15" rel="footnote">15</a></sup>.
+            &#160;<a href="#fnref:14" class="noul" rev="footnote" title="Jump back to footnote 14 in the text">&#8617;</a></p>
+            </li>
+
+            <li id="fn:15">
+            <p>It is not strictly necessary.
+            &#160;<a href="#fnref:15" class="noul" rev="footnote" title="Jump back to footnote 15 in the text">&#8617;</a></p>
+            </li>
+
+            <li id="fn:16">
+            <p>Very, very messily. Grab some popcorn and read <code>main.lua</code>, your afternoon shall not go mirthless.
+            &#160;<a href="#fnref:16" class="noul" rev="footnote" title="Jump back to footnote 16 in the text">&#8617;</a></p>
+            </li>
+
+            <li id="fn:17">
+            <p>Misleadingly titled, yes?
+            &#160;<a href="#fnref:17" class="noul" rev="footnote" title="Jump back to footnote 17 in the text">&#8617;</a></p>
+            </li>
+
+            <li id="fn:18">
+            <p>Yes, 'Joy' truly is a boy's name where we're from. The manliest, in fact. It is a title reserved for the most stalwart of men of a certain status.
+            &#160;<a href="#fnref:18" class="noul" rev="footnote" title="Jump back to footnote 18 in the text">&#8617;</a></p>
+            </li>
+
+            <li id="fn:19">
+            <p>I have also added a secret routine to make the Queen always win. <em>Knighthood, here I cometh!</em>
+            &#160;<a href="#fnref:19" class="noul" rev="footnote" title="Jump back to footnote 19 in the text">&#8617;</a></p>
+            </li>
+
+            <li id="fn:20">
+            <p>Still not Python, darnit.
+            &#160;<a href="#fnref:20" class="noul" rev="footnote" title="Jump back to footnote 20 in the text">&#8617;</a></p>
+            </li>
+
+            <li id="fn:21">
+            <p>Probably not. Joy would possibly have decided against the idea and started work on a <em>genetically-based solitaire</em> if I know him.
+            &#160;<a href="#fnref:21" class="noul" rev="footnote" title="Jump back to footnote 21 in the text">&#8617;</a></p>
+            </li>
+
+            <li id="fn:22">
+            <p>That means that you can do whatever you want with it, but you'll have to mention we made it first, and you'll have to be just as sharing with it, if not more.<sup id="fnref:23"><a href="#fn:23" rel="footnote">23</a></sup>
+            &#160;<a href="#fnref:22" class="noul" rev="footnote" title="Jump back to footnote 22 in the text">&#8617;</a></p>
+            </li>
+
+            <li id="fn:23">
+            <p>Simple wasn't it? Why do we have lawyers?<sup id="fnref:24"><a href="#fn:24" rel="footnote">24</a></sup>
+            &#160;<a href="#fnref:23" class="noul" rev="footnote" title="Jump back to footnote 23 in the text">&#8617;</a></p>
+            </li>
+
+            <li id="fn:24">
+            <p>Doesn't count as legal advice. Just...deal with it, okay?
+            &#160;<a href="#fnref:24" class="noul" rev="footnote" title="Jump back to footnote 24 in the text">&#8617;</a></p>
+            </li>
+        </ol>
+    </div>
+    <hr/>
+
 </body>
+
 </html>

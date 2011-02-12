@@ -102,6 +102,8 @@ Lest we forget, if it weren't for the ongoing Tigcompo, lack of progress on my m
 
 The dashingly bold typeface used throughout Yourglass is called [Chunkfive][chunkfive], by [The League of Movable Type][movabletype].
 
+'Freeware Game Pick' on [The Indie Games Weblog][igcom]!
+
 All this, except the bits which are already owned by other entities, is licensed under [CC-BY-SA][cc]. A gentleman's license, if there ever was one.[^22]
 
 [^18]:  Yes, 'Joy' truly is a boy's name where we're from. The manliest, in fact. It is a title reserved for the most stalwart of men of a certain status.
@@ -127,6 +129,7 @@ All this, except the bits which are already owned by other entities, is licensed
 [github]:       https://github.com/
 [chunkfive]:    http://www.fontsquirrel.com/fonts/ChunkFive
 [movabletype]:  http://www.theleagueofmoveabletype.com/
+[igcom]:        http://www.indiegames.com/blog/2011/02/freeware_game_pick_yourglass_s.html
 
 [exe]:          http://dl.dropbox.com/u/164058/yourglass/yourglass.zip
 [love]:         http://dl.dropbox.com/u/164058/yourglass/yourglass.love

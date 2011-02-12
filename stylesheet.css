@@ -1,0 +1,58 @@
+@font-face {
+    font-family: 'ChunkFiveRoman';
+    src: url('chunkfive-webfont.eot?') format('eot'),
+         url('chunkfive-webfont.woff') format('woff'),
+         url('chunkfive-webfont.ttf') format('truetype'),
+         url('chunkfive-webfont.svg#webfontqd37Roi6') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    background-color: #2e3436;
+    font-family: "Museo300-Regular", "Helvetica", "Arial", "Freesans";
+    font-size: 18px;
+    color: #ffffff;
+    margin: 0 auto;
+    width: 600px;
+    text-align:justify
+}
+
+div {padding-top: 30px; padding-bottom:10px;}
+
+p { padding-top:4px; padding-bottom: 4px;}
+
+h1 { font-size: 3.5em; margin-bottom: 3px; font-family: "ChunkFiveRoman"; font-weight: normal;}
+h2 { font-size: 1.2em;                     font-family: "ChunkFiveRoman"; font-weight: normal;}
+h3 { font-size: 1em;   text-align: center; font-family: "ChunkFiveRoman"; font-weight: normal;}
+
+a { color: #d1cbc9; }
+
+strong { font-family: "ChunkFiveRoman"; font-weight: normal;}
+
+sup { line-height: 0em; font-size: 0.75em; font-family: "ChunkFiveRoman"; }
+sup a { color: #777; text-decoration: none; }
+
+blockquote  {margin: 0; text-indent: -1em; font-size: 1em; font-family: "ChunkFiveRoman"; }
+blockquote:before {content: "“"; font-size: 2em; overflow: hidden; line-height: 0em; position:relative; top:0.2em;}
+blockquote:after  {content: "”"; font-size: 2em; overflow: hidden; line-height: 0em; position:relative; top:0.2em;}
+
+code { font-family: "ChunkFiveRoman"; }
+pre {background: #222; text-indent: 1em;} /*Remove indentation when download buttons are put it.*/
+
+hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
+
+ol { padding: 0; margin: 0; color: #777; font-family: "ChunkFiveRoman"; }
+ol p {                      color: #FFF; font-family: "Museo300-Regular", "Helvetica", "Arial", "Freesans"; }
+
+.header { padding-top: 100px; padding-bottom: 100px }
+.header img { width:100%; height:auto; }
+.title { visibility: none; }
+.nav {padding-top: 15px; padding-left: 82px; text-indent: -3.0em; font-family: "ChunkFiveRoman"; font-size: 1.54em;}
+.nav a { color: #FFF; }
+.nav:before { content:"Ask— ";}
+.footer { font-size: 0.75em; padding: 20px; text-align:center;}
+.footnote { font-size: 0.75em; }
+.red { color: #e63232; }
+.blu { color: #2781e5; }
+.noul { text-decoration: none; }
