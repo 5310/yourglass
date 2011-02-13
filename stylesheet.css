@@ -56,7 +56,7 @@ hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
 ol { padding: 0; margin: 0; color: #777; font-family: "ChunkFiveRoman"; }
 ol p {                      color: #FFF; font-family: 'Museo300', "Helvetica", "Arial", "Freesans"; }
 
-header { padding-top: 100px; padding-bottom: 100px }
+header { padding-top: 100px; padding-bottom: 30px }
 header img { width:100%; height:auto; }
 .title { visibility: none; }
 nav {padding-top: 15px; padding-left: 82px; text-indent: -3.0em; font-family: "ChunkFiveRoman"; font-size: 1.54em;}
